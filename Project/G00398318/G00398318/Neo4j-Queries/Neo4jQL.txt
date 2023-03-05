@@ -1,0 +1,3 @@
+MATCH (p)
+WHERE p.salary < 50000
+RETURN COLLECT(TOINTEGER(ROUND(p.salary))) AS Salaries_LT_50k

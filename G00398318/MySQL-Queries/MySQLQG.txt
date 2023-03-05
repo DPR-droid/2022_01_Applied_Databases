@@ -1,0 +1,10 @@
+Select ci.Name, hvc.dateArrived, c.Name
+FROM city ci
+JOIN country c
+ON c.Code = ci.CountryCode
+JOIN hasvisitedcity hvc
+ON ci.ID = hvc.cityID
+JOIN person p
+ON hvc.personID = p.personID
+WHERE p.personname = 'Sara'
+ORDER BY ci.Name;

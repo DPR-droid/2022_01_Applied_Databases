@@ -1,0 +1,4 @@
+name	dateArrived	name
+Jaunpur	1998-06-20	India
+Saint Helier	1999-05-20	United Kingdom
+ZÅrich	1999-01-20	Switzerland

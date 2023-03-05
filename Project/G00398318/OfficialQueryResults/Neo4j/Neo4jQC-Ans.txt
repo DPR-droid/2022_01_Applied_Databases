@@ -1,0 +1,5 @@
+Hobby, People
+"Cinema", 1
+"Painting", 2
+"Cooking", 4
+"Reading", 5

@@ -1,0 +1,7 @@
+Name	Government
+Austria	Federal Re
+Belgium	Constituti
+Germany	Federal Re
+Liechtenstein	Constituti
+Luxembourg	Constituti
+Switzerland	Federation

@@ -1,0 +1,8 @@
+MATCH(n) DETACH DELETE(n);
+CREATE(p:Person{name:"Seamus", age:27});
+CREATE(p:Person{name:"Shane", age:22});
+CREATE(p:Person{name:"Alice", age:60});
+CREATE(p:Person{name:"John", age:42});
+CREATE(p:Person{name:"Tom", age:22});
+CREATE(p:Person{name:"Mary", age:32});
+CREATE(p:Person{name:"Sean", age:57});

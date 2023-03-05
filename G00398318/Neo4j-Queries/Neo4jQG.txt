@@ -1,0 +1,3 @@
+MATCH (p{name:"Barbara Smith"})<-[:MOTHER_OF*2]-(gp)-[rel:HAS_HOBBY]->(h:Hobby{name:"Reading"})<-[r:HAS_HOBBY]-(p2)
+RETURN p2.name AS Names, p2.age AS Ages
+ORDER BY Names, Ages

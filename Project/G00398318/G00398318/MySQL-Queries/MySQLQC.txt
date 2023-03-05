@@ -1,0 +1,6 @@
+SELECT c.Name, SUBSTR(c.GovernmentForm,1,10) AS Government
+FROM country c
+JOIN countrylanguage cl
+ON c.Code = cl.CountryCode
+WHERE cl.Language = "German" AND cl.IsOfficial = "T"
+ORDER BY c.Name;

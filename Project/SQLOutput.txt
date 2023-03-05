@@ -1,0 +1,254 @@
+####################################################
+
+MySQLQC.txt 
+
+SELECT c.Name, SUBSTR(c.GovernmentForm,1,10) AS Government
+FROM country c
+JOIN countrylanguage cl
+ON c.Code = cl.CountryCode
+WHERE cl.Language = "German" AND cl.IsOfficial = "T"
+ORDER BY c.Name;
+
+
+c:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -proot world < C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\MySQL-Queries\MySQLQC.txt > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQC-MyAns.txt
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQC-MyAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\MySQL\MySQLQC-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\MySQLQC-MyAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\MYSQL\MYSQLQC-ANS.TXT
+FC: no differences encountered
+
+####################################################
+
+MySQLQD.txt 
+
+Select p.personID, p.personname, p.age,
+CASE
+WHEN p.age < 20  THEN "Visa-1"
+WHEN p.age BETWEEN 20 and 29 THEN "Visa-2"
+WHEN p.age BETWEEN 30 and 39 THEN "Visa-3"
+WHEN p.age BETWEEN 40 and 69 THEN "Visa-4"
+ELSE "Visa-5"
+END as "Visa"
+from person p
+order by Visa, p.personname;
+
+c:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -proot world < C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\MySQL-Queries\MySQLQD.txt > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQD-MyAns.txt
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQD-MyAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\MySQL\MySQLQD-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\MySQLQD-MyAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\MYSQL\MYSQLQD-ANS.TXT
+FC: no differences encountered
+
+####################################################
+
+MySQLQG.txt 
+
+
+Select ci.Name, hvc.dateArrived, c.Name
+FROM city ci
+JOIN country c
+ON c.Code = ci.CountryCode
+JOIN hasvisitedcity hvc
+ON ci.ID = hvc.cityID
+JOIN person p
+ON hvc.personID = p.personID
+WHERE p.personname = 'Sara'
+ORDER BY ci.Name;
+
+
+c:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -proot world < C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\MySQL-Queries\MySQLQG.txt > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQG-MyAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQG-MyAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\MySQL\MySQLQG-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\MySQLQG-MyAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\MYSQL\MYSQLQG-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+MySQLQH.txt
+
+SELECT c.Continent, c.Name, c.Population
+FROM country c                 
+  LEFT JOIN country co            
+      ON c.Continent = co.Continent AND c.Population < co.Population
+WHERE co.Population is NULL  AND  c.Population > 0
+ORDER BY c.Population DESC, c.Continent;         
+
+
+c:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -proot world < C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\MySQL-Queries\MySQLQH.txt > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQH-MyAns.txt
+mysql: [Warning] Using a password on the command line interface can be insecure.      
+
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQH-MyAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\MySQL\MySQLQH-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\MySQLQH-MyAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\MYSQL\MYSQLQH-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+MySQLQK.txt
+
+SELECT cl.CountryCode, SUM(cl.Percentage) AS 'Not Official Total'
+FROM countrylanguage cl
+JOIN country c
+ON cl.CountryCode = c.Code
+WHERE c.Region = 'Caribbean'
+AND cl.IsOfficial = 'F'
+GROUP BY cl.CountryCode
+ORDER BY cl.CountryCode;
+
+
+c:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -proot world < C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\MySQL-Queries\MySQLQK.txt > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQK-MyAns.txt
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQK-MyAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\MySQL\MySQLQK-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\MySQLQK-MyAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\MYSQL\MYSQLQK-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+
+MySQLQL.txt
+
+
+Select ci.Name, ci.Population , p.personname
+FROM city ci
+JOIN country c
+ON c.Code = ci.CountryCode
+JOIN hasvisitedcity hvc
+ON ci.ID = hvc.cityID
+JOIN person p
+ON hvc.personID = p.personID
+WHERE ci.Population >
+ (SELECT * FROM
+(
+    Select max(Population) from country
+	WHERE Region = 'Polynesia'
+) AS MAXPolynesia)
+ORDER BY ci.Name;
+
+c:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -proot world < C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\MySQL-Queries\MySQLQL.txt > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQL-MyAns.txt
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\MySQLQL-MyAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\MySQL\MySQLQL-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\MySQLQL-MyAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\MYSQL\MYSQLQL-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+Example neo4J
+
+
+match(n:Person) WHERE n.age > 50 RETURN n.name, n.age ORDER BY n.age
+
+type Neo4jQA.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQA-myAns.txt
+
+
+
+####################################################
+
+
+Neo4jQC.txt
+
+
+MATCH (n:Hobby) <-[:HAS_HOBBY]-(p:Person)
+RETURN n.name AS Hobby, count(p.name) AS People
+ORDER BY People
+
+C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\Neo4j-Queries>type Neo4jQC.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQC-myAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQC-myAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\Neo4j\Neo4jQC-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\Neo4jQC-myAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\NEO4J\NEO4JQC-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+
+Neo4jQD.txt
+
+MATCH (n:Person) 
+WHERE n.salary IS NOT NULL
+RETURN COUNT(n) as People_on_a_Salary
+
+
+C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\Neo4j-Queries>type Neo4jQD.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQD-myAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQD-myAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\Neo4j\Neo4jQD-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\Neo4jQD-myAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\NEO4J\NEO4JQD-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+Neo4jQG.txt
+
+MATCH (p{name:"Barbara Smith"})<-[:MOTHER_OF*2]-(gp)-[rel:HAS_HOBBY]->(h:Hobby{name:"Reading"})<-[r:HAS_HOBBY]-(p2)
+RETURN p2.name AS Names, p2.age AS Ages
+ORDER BY Names, Ages
+
+C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\Neo4j-Queries>type Neo4jQG.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQG-myAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQG-myAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\Neo4j\Neo4jQG-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\Neo4jQG-myAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\NEO4J\NEO4JQG-ANS.TXT
+FC: no differences encountered
+
+####################################################
+
+
+Neo4jQH.txt
+
+MATCH (p:Person)
+OPtional MATCH (p)<-[:MARRIED_TO]->(p1:Person)
+RETURN p.name as Name, p1.name as Spouse
+ORDER by Name
+
+C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\Neo4j-Queries>type Neo4jQH.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQH-myAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQH-myAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\Neo4j\Neo4jQH-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\Neo4jQH-myAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\NEO4J\NEO4JQH-ANS.TXT
+FC: no differences encountered
+
+
+####################################################
+
+
+Neo4jQK.txt
+
+MATCH (p:Person)-[rel:HAS_HOBBY]->(h:Hobby{name:"Reading"})
+WHERE p.age < 20
+RETURN COUNT(p.age) as Under_20s
+
+
+C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\Neo4j-Queries>type Neo4jQK.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQK-myAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQK-myAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\Neo4j\Neo4jQK-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\Neo4jQK-myAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\NEO4J\NEO4JQK-ANS.TXT
+FC: no differences encountered
+
+####################################################
+
+
+Neo4jQL.txt
+
+MATCH (p)
+WHERE p.salary < 50000
+RETURN COLLECT(TOINTEGER(ROUND(p.salary))) AS Salaries_LT_50k
+
+C:\repo\01_2022_Applied_Databases\Project\G00398318\G00398318\Neo4j-Queries>type Neo4jQL.txt | C:\repo\01_2022_Applied_Databases\neo4j-community-4.4.5\bin\cypher-shell.bat -u neo4j -p neo4j1 --format plain > C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQL-myAns.txt
+
+C:\WINDOWS\system32>fc /C C:\repo\01_2022_Applied_Databases\Project\MySQLAnswers\Neo4jQL-myAns.txt C:\repo\01_2022_Applied_Databases\Project\G00398318\OfficialQueryResults\Neo4j\Neo4jQL-Ans.txt
+Comparing files C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\MYSQLANSWERS\Neo4jQL-myAns.txt and C:\REPO\01_2022_APPLIED_DATABASES\PROJECT\G00398318\OFFICIALQUERYRESULTS\NEO4J\NEO4JQL-ANS.TXT
+FC: no differences encountered
+
+
+
+
+
+
+####################################################
+
+

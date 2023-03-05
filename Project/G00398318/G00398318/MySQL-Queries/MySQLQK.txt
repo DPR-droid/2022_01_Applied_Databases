@@ -1,0 +1,8 @@
+SELECT cl.CountryCode, SUM(cl.Percentage) AS 'Not Official Total'
+FROM countrylanguage cl
+JOIN country c
+ON cl.CountryCode = c.Code
+WHERE c.Region = 'Caribbean'
+AND cl.IsOfficial = 'F'
+GROUP BY cl.CountryCode
+ORDER BY cl.CountryCode;

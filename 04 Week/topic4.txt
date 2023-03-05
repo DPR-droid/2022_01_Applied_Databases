@@ -1,0 +1,382 @@
+Topic 2
+
+1. Get school.sql from Moodle and import it into MySQL.
+
+2. What is the maximum length of data that can be inserted into the Name attribute of the
+subject table?
+
+3. What is the Primary Key of the teacher table?
+
+
+4. What is the Primary Key of the subject table?
+
+
+5. Show all data contained in the subject table
+select * from subject;
+
+6. Show all names of all subjects that are on the leaving cert.
+
+select * from subject
+where onleavingcert = 1;
+
+select * from subject
+where onleavingcert = TRUE;
+
+select * from subject
+where onleavingcert;
+
+7. Show all name and experience of all teachers who are qualified to teach to Leaving Cert.
+select name, experience
+
+from teacher
+where level = "L";
+
+
+8. Show all details of all subjects who are taught by teachers whose title is not “Mr.”
+select * from subject
+where teacher NOT LIKE "Mr.%";
+
+9. Show all details of all teachers who were born in January, February or March, and who can
+teach as far as Junior Cert only.
+select *
+from teacher
+where month(dob) BETWEEN 1 and 3
+and level = "J";
+
+10. Show all unique month names that teachers were born in.
+select distinct monthname(dob)
+from teacher;
+
+
+11. Show all details of all teachers, sorted by first by experience, then level.
+select * from teacher
+order by experience, level;
+
+12. Show all details of all subjects whose 3rd or 4th letter is “l”. Sort them by name.
+select * from subject
+where name like "__l%"
+or name like "___l%"
+order by name;
+
+
+13. Show the name of all teachers who have 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 or 60 years
+experience. Sort from youngest to oldest.
+select * from teacher
+where experience in (10,15,20,25,30,35,40,45,50,55)
+order by dob desc;
+
+
+Topic 3
+
+2. Print out the emp_no, first_name and a capitalised version of the employees last_name,
+using the same column names that are in the table for the first 10 employees returned from
+the database.
+select emp_no, first_name, UPPER(last_name) as last_name from
+employees limit 10;
+
+3. Sort the employees table based on:
+• The length of last_name
+• Alphabetical order of last_name
+• The length of first_name
+• Alphabetical order of first_name
+select * from employees
+order by length(last_name), last_name, length(first_name),
+first_name;
+
+
+4. Show all details of the first 10 employees returned from the database and an extra column
+called Initials that shows the employee’s initials.
+select *, concat(substr(first_name, 1, 1), substr(last_name, 1, 1))
+as initials from employees limit 10;
+
+
+5. Show all details of all Females born in the 1950s and hired between September 1st 1988 and
+February 28th 1991.
+select * from employees where gender = "F"
+and year(birth_date) between 1950 and 1959
+and hire_date > "1988-09-01" and hire_date < "1991-02-28";
+
+6. Show the average salary from the salaries table formatted to two decimal places.
+E.g. 12345.6789 should become 12,345.68.
+select format(avg(salary),2) from salaries;
+
+
+7. Show the emp_no and average salary for each employee formatted to two decimal places.
+select emp_no, format(avg(salary),2) from salaries
+group by emp_no;
+
+
+8. Show the emp_no and maximum salary for each employee formatted to two decimal places.
+select emp_no, format(max(salary),2) from salaries
+group by emp_no;
+
+9. Show the emp_no and average salary formatted to two decimal places for the following
+employee numbers: 10001, 10021, 10033 and 10087.
+But only include in the average calculation salaries greater than 80,000.
+select emp_no, format(avg(salary),2) from salaries
+where emp_no in (10001, 10021, 10033, 10087)
+and salary > 80000
+group by emp_no;
+
+10. Show the emp_no and average salary rounded to the nearest whole number only for
+average salaries greater than 90,000.
+select emp_no, format(avg(salary),0)
+from salaries
+group by emp_no
+having avg(salary) > 90000;
+
+11. Show the following details, in the following order, for the first 15 employees, in emp_no
+order:
+ID, Title, Name, Surname, Gender.
+Title should be “Mr.” if the employee is Male, and “Ms.” if the employee is female.
+select emp_no ID, IF(gender="M","Mr.","Ms.") Title, first_name Name,
+last_name Surname, gender Gender
+from employees
+order by emp_no limit 15;
+
+12. Show the following details emp_no, the maximum salary for each employee, and the tax
+bracket the employee’s maximum salary is in (Tax Bracket).
+Tax brackets are defined as follows:
+Max Salary Tax Bracket
+Under 40,000 30%
+Under 60,000 40%
+Under 80,000 50%
+Over 80,000 60%
+select emp_no, max(salary),
+CASE
+WHEN max(salary) < 40000 THEN "30%"
+WHEN max(salary) < 60000 THEN "40%"
+WHEN max(salary) < 80000 THEN "50%"
+ELSE "60%"
+END as "Tax Bracket"
+from salaries
+group by emp_no
+order by max(salary);
+
+13. Show all details from the salaries table as well as a column entitled “Time” which states
+“Under 1 yr” if the employee has been on a particular salary for less than 365 days,
+otherwise states “Over 1 yr”.
+select *,
+IF((datediff(to_date, from_date)<365) and
+(datediff(now(), from_date)<365),"Under 1 yr", "Over 1 yr")
+as time
+from salaries;
+
+14. Using a function show all columns from the employees table, and a column entitled “Age”
+which is the age the employee was when he or she was hired. The age should be rounded to
+1 digit after the decimal place.
+For example, employee 10001 was 32.8 years old when he was hired.
+HINT: Don’t for get to change the delimiter when writing the function and change it back to
+a semi-colon when the function is written.
+create function getage(d1 date, d2 date)
+returns float(5,1)
+delimiter //
+create function getage(d1 date, d2 date)
+returns float(5,1)
+deterministic
+begin
+return round(datediff(d2,d1)/365,1);
+end
+//
+select *, getage(birth_date, hire_date) as Age
+from employees;
+
+15. Write a procedure that takes two parameters, one representing a year and the other a
+month.
+The procedure should return all employees hired in specified year and month.
+create procedure hires(y integer, m integer)
+delimiter //
+deterministic
+begin
+select * from employees where year(hire_date) = y
+and month(hire_date) = m;
+end
+//
+
+
+ewrite the above procedure so that if the month parameter is NULL the procedure returns
+all employees hired in the specified year.
+If the month is not NULL, the procedure works as it did previously.
+HINT: To call a procedure with a NULL value for month (assuming in this case month is the
+second parameter) procedure_name(1985, NULL).
+To check if a parameter, e.g. m, is NULL say IF M IS NULL THEN
+To check if a parameter, e.g. m, is not NULL say IF M IS NOT NULL THEN.
+create procedure hires(y integer, m integer)
+deterministic
+begin
+if m is null then
+select * from employees where year(hire_date) = y;
+else
+select * from employees where year(hire_date) = y
+and month(hire_date) = m;
+end if;
+end
+
+
+
+
+Topic 4 
+
+
+2. How are the tables in the database related?
+show create table manufacturer; - No FK.
+show create table vehicle; - The manu_code in vehicle is a FK referencing the
+manu_code in manufacturer.
+
+3. Show the manu_code, manu_name and the first 10 characters of the manu_details followed
+by three dots (…) for each manufacturer.
+select manu_code, manu_name, concat(substr(manu_details,1,20),"...")
+from manufacturer;
+
+
+4. Show the average length of the manu_name (displayed as “Length”) with 0 characters after
+the decimal point.
+HINT: Functions needed are avg(), length() and format().
+select format(avg(length(manu_name)),0) as "Length" from
+manufacturer;
+
+5. Show all details of all vehicles plus an extra column called “cost” which has the value 1.45 if
+the fuel is petrol otherwise has the value 1.30.
+select *, IF(fuel="petrol",1.45,1.30) as cost
+from vehicle;
+
+
+6. Show all the reg, manu_code and associated manu_name for each vehicle.
+select v.reg, v.manu_code, m.manu_name
+from vehicle v
+inner join manufacturer m
+on v.manu_code = m.manu_code;
+
+
+7. Show the manu_code and manu_name as well as associated reg, for each manufacturer who
+has vehicles listed in the vehicle table.
+select m.manu_code, m.manu_name, v.reg
+from manufacturer m
+inner join vehicle v
+on m.manu_code = v.manu_code;
+
+
+8. Show the manu_code and manu_name as well as associated reg, for all manufacturers and if
+they have vehicles listed in the vehicle table, show the reg of it.
+select m.manu_code, m.manu_name, v.reg
+from manufacturer m
+left join vehicle v
+on m.manu_code = v.manu_code;
+
+
+9. Write a stored procedure called price_less_than that takes one parameter of type
+decimal(8,2) which represents the price of a vehicle:
+price_less_than(p decimal(8,2))
+The procedure should then return the following details for all vehicles where the price of the
+vehicle is less than p sorted by ascending price:
+• Reg
+• Manu_code
+• Manu_name
+• Mileage
+• Price
+
+
+delimiter //
+CREATE PROCEDURE price_less_than(p decimal(8,2))
+deterministic
+begin
+select v.reg, v.manu_code, m.manu_name, v.mileage, v.price
+from vehicle v
+inner join manufacturer m
+on v.manu_code = m.manu_code
+where v.price < p
+order by v.price;
+end
+//
+
+
+Topic 5
+
+
+2. How are the tables in the database related?
+The busReg column in driver is a Foreign Key referencing the reg column in bus.
+
+3. Add the following drivers:
+“Mary”
+“Bob” – licence number “RN2423”
+“Sean” – licence number “FF88345” who drives bus “191-G-123”
+What happens and why?
+Can’t insert “Mary” as she doesn’t have a licence.
+INSERT INTO driver (licenceNo, name) values ("RN2423", "Bob");
+INSERT INTO driver values ("FF88345", "Sean", "191-G-123");
+
+
+4. Add the following buses:
+"12-G-1323" that can hold up to 34 passengers and runs on "Diesel"
+"171-G-885" that can hold up to 84 passengers and runs on "Petrol"
+"191-D-45890" that can hold up to 120 passengers and runs on "Ethanol"
+
+What happens and why?
+
+Can’t insert “12-G-1323” as reg is primary key and bus of that reg already exists.
+INSERT INTO bus values ("171-G-885", 84, "Petrol");
+Can’t insert “191-D-45890” as fuel is an enum, and “Ethanol” is not one of the allowed
+values
+
+5. Update driver’s licences that contain the letters “F” or “R” to have the letters “T-“ before
+their current licence number.
+update driver
+set licenceNo = CONCAT("T-",licenceNo)
+where licenceNo like "%F%"
+or licenceNo like "%R%";
+
+6. Delete driver “Alan”. What happens and why?
+delete from driver
+where name = "Alan";
+The driver is deleted because even though he is referencing foreign key, no other column
+from any other table is referencing anything in his row
+
+
+7. Delete bus “161-d-1323”. What happens and why?
+delete from bus where reg = "161-d-1323";
+Bus reg “161-D-1323” is deleted from the bus table.
+Driver “Tom” whose busReg attribute referenced bus “161-D-1323” is also deleted, this is
+because when defining the Foreign Key on the busReg attribute, it was defined as ON
+DELETE CASCADE, so anything in this table referencing an the value of an attribute to be
+deleted in the bus table would also be deleted.
+
+8. Get bus2.sql from Moodle and import it into MySQL. To use this database type use bus2;
+
+9. Delete bus “161-d-1323”. What happens and why?
+delete from bus where reg = "161-d-1323";
+Bus reg “161-D-1323” is deleted from the bus table.
+Driver “Tom” whose busReg attribute referenced bus “161-D-1323” is NOT deleted, but his
+busReg attribute which was referencing bus “161-D-1323” now says NULL instead.
+This is because the Foreign Key on this table is set to ON DELETE CASCADE, meaning any
+attempt to delete a referenced foreign key will set the value to NULL in this table
+
+
+10. Get employees2.sql from Moodle and import it into MySQL. To use this database type use
+employees2;
+
+11. Show the emp_no, first_name and last_name of employees born in the average year.
+The average year should be rounded down to the nearest whole number. For example,
+• 1949.1 becomes 1949.
+• 1949.9 becomes 1949.
+• 1949.0 becomes 1949.
+select emp_no, first_name, last_name from employees
+where year(birth_date) = (
+select floor(avg(year(birth_date))) from employees
+);
+
+12. Show the emp_no, first_name, last_name and name of the department each employee is in.
+select distinct e.emp_no, e.first_name, e.last_name, d.name
+from employees e
+inner join salaries s
+on e.emp_no = s.emp_no
+inner join dept d
+on s.dept_no = d.dept_no;
+
+
+
+
+reg delete "HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default" /va /f
+reg delete "HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers" /f
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Servers"
+del /ah %homepath%\documents\default.rdp
+

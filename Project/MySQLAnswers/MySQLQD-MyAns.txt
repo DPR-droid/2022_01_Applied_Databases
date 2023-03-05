@@ -1,0 +1,7 @@
+personID	personname	age	Visa
+6	Michael	19	Visa-1
+2	Alan	23	Visa-2
+5	Jane	25	Visa-2
+4	Sara	25	Visa-2
+3	Sean	30	Visa-3
+1	Tom	33	Visa-3

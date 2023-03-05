@@ -1,0 +1,7 @@
+Continent	Name	Population
+Asia	China	1277558000
+North America	United States	278357000
+South America	Brazil	170115000
+Europe	Russian Federation	146934000
+Africa	Nigeria	111506000
+Oceania	Australia	18886000

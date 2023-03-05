@@ -1,0 +1,3 @@
+MATCH (n:Hobby) <-[:HAS_HOBBY]-(p:Person)
+RETURN n.name AS Hobby, count(p.name) AS People
+ORDER BY People

@@ -1,0 +1,15 @@
+Select ci.Name, ci.Population , p.personname
+FROM city ci
+JOIN country c
+ON c.Code = ci.CountryCode
+JOIN hasvisitedcity hvc
+ON ci.ID = hvc.cityID
+JOIN person p
+ON hvc.personID = p.personID
+WHERE ci.Population >
+ (SELECT * FROM
+(
+    Select max(Population) from country
+	WHERE Region = 'Polynesia'
+) AS MAXPolynesia)
+ORDER BY ci.Name;

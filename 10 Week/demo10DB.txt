@@ -1,0 +1,37 @@
+MATCH(n) DETACH DELETE n;
+CREATE(m:Module{credits:10, mid:"PYT", name:"Python Programming"});
+CREATE(m:Module{credits:5, mid:"JAV", name:"Java Programming"});
+CREATE(m:Module{credits:5, mid:"ADB", name:"Applied Databases"}); 
+
+CREATE(s:Student{name:"Tom Carthy", sid:"G001"});
+CREATE(s:Student{name:"Jane Jackson", sid:"G002"}); 
+CREATE(s:Student{name:"Billy Williams", sid:"G003"}); 
+CREATE(s:Student{name:"Tom Mulligan", sid:"G004"});
+
+
+MATCH(s:Student{sid:"G004"})
+MATCH(m:Module{mid:"ADB"})
+CREATE(s)-[:STUDIES]->(m);
+
+MATCH(s:Student{sid:"G003"})
+MATCH(m:Module{mid:"ADB"})
+CREATE(s)-[:STUDIES]->(m);
+ 
+MATCH(s:Student{sid:"G003"})
+MATCH(m:Module{mid:"JAV"})
+CREATE(s)-[:STUDIES]->(m);
+
+MATCH(s:Student{sid:"G001"})
+MATCH(m:Module{mid:"JAV"})
+CREATE(s)-[:STUDIES]->(m);
+
+MATCH(s:Student{sid:"G002"})
+MATCH(m:Module{mid:"JAV"})
+CREATE(s)-[:STUDIES]->(m);
+
+MATCH(s:Student{sid:"G002"})
+MATCH(m:Module{mid:"PYT"})
+CREATE(s)-[:STUDIES]->(m);
+
+CREATE CONSTRAINT mid_unique ON (m:Module) ASSERT m.mid IS UNIQUE;
+CREATE CONSTRAINT sid_unique ON (s:Student) ASSERT s.sid IS UNIQUE;

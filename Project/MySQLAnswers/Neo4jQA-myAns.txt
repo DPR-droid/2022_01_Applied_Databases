@@ -1,0 +1,7 @@
+n.name, n.age
+"Johnathon Taylor", 52
+"John Smith", 54
+"Anne Smith", 54
+"Bridget Jones", 71
+"Will Jones", 75
+"Noel Jones", 81

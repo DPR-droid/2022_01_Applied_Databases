@@ -1,0 +1,19 @@
+Name, Spouse
+"Ann Smith", NULL
+"Anne Smith", "John Smith"
+"Barbara Smith", NULL
+"Barry Taylor", NULL
+"Bridget Jones", "Will Jones"
+"Chloe Taylor", "Johnathon Taylor"
+"Damien Jones", "Denise Jones"
+"Denise Jones", "Damien Jones"
+"John Smith", "Anne Smith"
+"John Taylor", NULL
+"Johnathon Taylor", "Chloe Taylor"
+"Mary Jones", "Noel Jones"
+"Noel Jones", "Mary Jones"
+"Noel Jones", NULL
+"Paul Jones", NULL
+"Sarah Jones", NULL
+"Tom Smith", NULL
+"Will Jones", "Bridget Jones"

@@ -1,0 +1,6 @@
+SELECT c.Continent, c.Name, c.Population
+FROM country c                 
+  LEFT JOIN country co            
+      ON c.Continent = co.Continent AND c.Population < co.Population
+WHERE co.Population is NULL  AND  c.Population > 0
+ORDER BY c.Population DESC, c.Continent;
